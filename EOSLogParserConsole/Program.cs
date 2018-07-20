@@ -1,10 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
 
 namespace EOSLogParserConsole
 {
+
+    public class producerState
+    {
+        Dictionary<string, producerStats> producers { get; set; }
+
+        public producerState()
+        {
+            producers = new Dictionary<string, producerStats>();
+        }
+
+        public void registerBlockProduction(string producer, Int64 block)
+        {
+            var exists = producers.ContainsKey(producer);
+            if(exists)
+            {
+                
+            }
+            else
+            {
+                var stats = new producerStats();
+                producers.Add(producer, stats);
+            }
+            producers[producer].blockCount++;
+        }
+
+        public void print(String producer)
+        {
+            Console.WriteLine(string.Format("{0}\t{1}", producer, producers[producer].blockCount));
+        }
+
+
+    }
+
+    public class producerStats
+    {
+        public int blockCount { get; set; }
+    }
 
     public class lineParser {
 
@@ -52,7 +90,7 @@ namespace EOSLogParserConsole
 
         public void print()
         {
-            string.Format("{0}\t{1}\t{2}", dateTime.ToLocalTime(), part_producer, blockNumber);
+            
 
             Console.WriteLine(string.Format("{0}\t{1}\t{2}", dateTime.ToLocalTime(), part_producer, blockNumber));
             /*
@@ -75,26 +113,33 @@ namespace EOSLogParserConsole
 
     class Program
     {
+        static producerState state = new producerState();
+
         static void Main(string[] args)
         {
             /*
             string ln = @"2018-07-20T18:19:42.500 thread-0   producer_plugin.cpp:1194      produce_block        ] Produced block 000047b9f6c393b2... #18361 @ 2018-07-20T18:19:42.500 signed by bp2 [trxs: 0, lib: 18347, confirmed: 0]";
-
-            lineParser line = new lineParser(ln);
-            line.print();
+            exec(ln);
+            exec(ln);
             */
-
             Console.ReadLine();
-                string s;
-                while ((s = Console.ReadLine()) != null)
-                {
-                    //Console.WriteLine(s);
-                    lineParser line = new lineParser(s);
-                    line.print();
-
-                }
+            string s;
+            while ((s = Console.ReadLine()) != null)
+            {
+                exec(s);
+            }
 
 
+        }
+
+        static void exec(string s)
+        {
+            //Console.WriteLine(s);
+            lineParser line = new lineParser(s);
+            state.registerBlockProduction(line.part_producer, line.blockNumber);
+            line.print();
+            state.print(line.part_producer);
+            
         }
     }
 }
