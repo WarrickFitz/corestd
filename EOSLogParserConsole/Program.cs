@@ -10,55 +10,13 @@ namespace EOSLogParserConsole
         static void Main(string[] args)
         {
 
-            string stdin = null;
-            if (Console.IsInputRedirected)
-            {
-                using (Stream stream = Console.OpenStandardInput())
+                string s;
+                while ((s = Console.ReadLine()) != null)
                 {
-                    byte[] buffer = new byte[1000];  // Use whatever size you want
-                    StringBuilder builder = new StringBuilder();
-                    int read = -1;
-                    while (true)
-                    {
-                        AutoResetEvent gotInput = new AutoResetEvent(false);
-                        Thread inputThread = new Thread(() =>
-                        {
-                            try
-                            {
-                                read = stream.Read(buffer, 0, buffer.Length);
-                                gotInput.Set();
-                            }
-                            catch (ThreadAbortException)
-                            {
-                                Thread.ResetAbort();
-                            }
-                        })
-                        {
-                            IsBackground = true
-                        };
-
-                        inputThread.Start();
-
-                        // Timeout expired?
-                        if (!gotInput.WaitOne(100))
-                        {
-                            inputThread.Abort();
-                            break;
-                        }
-
-                        // End of stream?
-                        if (read == 0)
-                        {
-                            stdin = builder.ToString();
-                            break;
-                        }
-
-                        // Got data
-                        builder.Append(Console.InputEncoding.GetString(buffer, 0, read));
-                    }
+                    Console.WriteLine(s);
                 }
-            }
 
-        }
+
+    }
     }
 }
