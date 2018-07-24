@@ -1,19 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NLog" Version="4.5.7" />
-    <PackageReference Include="NLog.Config" Version="4.5.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="EOSDotNet">
-      <HintPath>..\..\EOSDotNet\EOSDotNet\bin\Debug\netcoreapp2.1\EOSDotNet.dll</HintPath>
+    <Reference Include="EOSNewYork.EOSCore">
+      <HintPath>..\..\EOSDotNet\EOSNewYork.EOSCore\bin\Debug\netstandard2.0\EOSNewYork.EOSCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 

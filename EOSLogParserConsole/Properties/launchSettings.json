@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "mainnet": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "APIHost": "http://mainnet.eosdocs.io:7001",
+        "LOGHOST": "ws://mainnet.eosdocs.io:8001/"
+      }
+    },
+    "pennstation": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "APIHost": "http://pennstation.eosdocs.io:7001",
+        "LOGHOST": "ws://pennstation.eosdocs.io:8001/"
+      }
+    }
+  }
+}

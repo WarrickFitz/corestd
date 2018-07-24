@@ -6,15 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NLog" Version="4.5.7" />
     <PackageReference Include="NLog.Config" Version="4.5.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="EOSDotNet">
-      <HintPath>..\..\EOSDotNet\EOSDotNet\bin\Debug\netcoreapp2.1\EOSDotNet.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\EOSNewYork.NodeosLogParser\EOSNewYork.NodeosLogParser.csproj" />
   </ItemGroup>
 
 </Project>

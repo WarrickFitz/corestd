@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading;
-using System.Net.WebSockets;
-using System.Threading.Tasks;
-using System.Collections;
 using System.Collections.Concurrent;
-using EOSLib;
+using System.Threading;
+using EOSNewYork.NodeosLogParser;
 using NLog;
-using System.Linq;
 
-namespace EOSLogParserConsole
+namespace EOSLogParserCoreConsole
 {
-   
     class Program
     {
         public static ConcurrentQueue<String> logQ = null;
@@ -24,7 +16,7 @@ namespace EOSLogParserConsole
         {
             history = new ProductionHistory();
 
-            var LOGHOST = Environment.GetEnvironmentVariable("LOGHost");
+            var LOGHOST = Environment.GetEnvironmentVariable("loghost");
             //Start the log collector, this strats a thread the feeds logs into the quete to be processed. 
             //LogsFromWebsocket logSource = new LogsFromWebsocket("ws://pennstation.eosdocs.io:8001/");
             LogsFromWebsocket logSource = new LogsFromWebsocket(LOGHOST);
@@ -51,19 +43,19 @@ namespace EOSLogParserConsole
         {
             try
             {
-                while(1<2)
+                while (1 < 2)
                 {
                     // I'm not sure why, but if you try to access the queue to quickly the application hangs. 
                     Thread.Sleep(1000);
-                    while(logQ.Count > 0)
+                    while (logQ.Count > 0)
                     {
                         String result = String.Empty;
                         var qItem = logQ.TryDequeue(out result);
-                        if(result.Contains("on_incoming_block") || result.Contains("produce_block"))
+                        if (result.Contains("on_incoming_block") || result.Contains("produce_block"))
                         {
                             processLine(result);
-                        }                        
-                    }                   
+                        }
+                    }
                 }
             }
             catch (Exception ex)

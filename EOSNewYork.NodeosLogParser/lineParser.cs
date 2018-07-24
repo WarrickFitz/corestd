@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EOSLogParserConsole
+namespace EOSNewYork.NodeosLogParser
 {
     public class lineParser
     {
@@ -31,13 +31,13 @@ namespace EOSLogParserConsole
 
         public lineParser(string ln)
         {
-            var lineParts = ln.Split("@");
-            var prefixParts = lineParts[0].Trim().Split(" ");
+            var lineParts = ln.Split('@');
+            var prefixParts = lineParts[0].Trim().Split(' ');
 
             part_blockNumber = prefixParts[prefixParts.Length - 1].Trim().Replace("#", "");
 
-            var signParts = lineParts[1].Split("[");
-            var signByParts = signParts[0].Trim().Split(" ");
+            var signParts = lineParts[1].Split('[');
+            var signByParts = signParts[0].Trim().Split(' ');
 
             part_signDateTime = signByParts[0];
             part_producer = signByParts[signByParts.Length - 1];
